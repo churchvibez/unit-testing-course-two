@@ -31,10 +31,18 @@ jobs:
           coverage report
           coverage xml
 
+          - name: Run tests with coverage
+          run: |
+            coverage run -m unittest discover -s tests -v
+            coverage report
+            coverage xml
+            
       - name: Submit coverage to Coveralls
-        env:
-          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
-        run: coveralls
+        uses: coverallsapp/github-action@v2
+        with:
+            github-token: ${{ secrets.GITHUB_TOKEN }}
+            path-to-lcov: coverage.xml
+        
 
   sonarcloud:
     runs-on: ubuntu-latest
