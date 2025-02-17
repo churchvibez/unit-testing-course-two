@@ -38,7 +38,6 @@ class TestLibrary(unittest.TestCase):
         book = self.library.find_book("Doom Bringer")
         self.assertIsNone(book)
 
-
     def test_save_to_file(self):
         response = self.library.save_to_file(self.temp_file)
         self.assertTrue(os.path.exists(self.temp_file))
@@ -46,10 +45,8 @@ class TestLibrary(unittest.TestCase):
 
     def test_load_from_file(self):
         self.library.save_to_file(self.temp_file)
-
         new_library = Library()
         response = new_library.load_from_file(self.temp_file)
-
         self.assertEqual(response, f"Информация загружена из: {self.temp_file}.")
         self.assertEqual(len(new_library.books), 3)
         self.assertEqual(new_library.books[0].title, "To Kill a Mockingbird")
@@ -58,15 +55,11 @@ class TestLibrary(unittest.TestCase):
     def test_levenstein_distance(self):
         string1 = "The Great Gatsby"
         string2 = "Thee Greats atsby"
-
         self.assertEqual(self.library._levenshtein_distance(string1, string2), 3)
 
     def test_suggest_books(self):
-
         self.library.add_book(Book("Lucky man", "John"))
-
         self.library.add_book(Book("Lucky men", "Lee"))
-
         self.assertEqual(len(self.library.suggest_books("Lucky m")), 2)
 
     def test_suggest_empty_title_book(self):
@@ -76,7 +69,6 @@ class TestLibrary(unittest.TestCase):
     def test_find_empty_title_book(self):
         result = self.library.find_book("")
         self.assertIsNone(result)
-
 
 if __name__ == "__main__":
     unittest.main()
